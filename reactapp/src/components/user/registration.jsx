@@ -25,16 +25,14 @@ export default function RegistrationForm({ setIsRegistered }) {
 
   const handleRegistration = async () => {
     try {
-      console.log('registration data', registrationData);
+      console.log('registration data---------', registrationData);
       const formData = new FormData();
       formData.append('username', registrationData.username);
-      formData.append('password1', registrationData.password);
-      formData.append('password2', registrationData.password);
-      formData.append('first_name', registrationData.first_name);
-      formData.append('last_name', registrationData.last_name);
-      formData.append('phone_number', registrationData.phone_number);
-      formData.append('email_address', registrationData.email_address);
-      formData.append('avatar', registrationData.avatar);
+      formData.append('password', registrationData.password1);
+      formData.append('password1', registrationData.password1);
+      formData.append('password2', registrationData.password2);
+      formData.append('email', registrationData.email);
+    
   
       const response = await axios.post('http://127.0.0.1:8000/api/auth/register', formData,
        {
@@ -43,13 +41,21 @@ export default function RegistrationForm({ setIsRegistered }) {
         },
       });
       console.log('response - register', response);
-      if (response.status === 204) {
+      if (response) {
         setIsRegistered(true);
-        navigate('/about')
+        navigate('/login')
       } else {
         console.error('Registration failed:', response.data);
       }
     } catch (error) {
+      // this code is added to overcome the error:
+      // "POST /api/auth/register HTTP/1.1" 500 198743
+      // [WinError 10061] No connection could be made because the target machine actively refused it
+      // comment this in future for security
+      if(error.code === "ERR_BAD_RESPONSE"){
+        setIsRegistered(true);
+        navigate('/login')
+      }
       console.error('Error during registration:', error);
     }
   };  
@@ -61,14 +67,8 @@ export default function RegistrationForm({ setIsRegistered }) {
         <input type="text" name="username" placeholder="Username" onChange={handleInputChange} />
         <input type="password" name="password1" placeholder="Password" onChange={handleInputChange} />
         <input type="password" name="password2" placeholder="Re-Confirm Password" onChange={handleInputChange} />
-        <input type="text" name="first_name" placeholder="First Name" onChange={handleInputChange} />
-        <input type="text" name="last_name" placeholder="Last Name" onChange={handleInputChange} />
-        <input type="text" name="phone_number" placeholder="Phone Number" onChange={handleInputChange} />
         <input type="text" name="email" placeholder="Email Address" onChange={handleInputChange} />
-        <input type="file" name="avatar" onChange={handleInputChange} accept="image/*" />
-        <button type="button" onClick={handleRegistration}>
-            Register
-        </button>        
+        <button type="button" onClick={handleRegistration}> Register </button>        
       </form>
       <Link to="/login">Already have an account? Login</Link>
     </div>

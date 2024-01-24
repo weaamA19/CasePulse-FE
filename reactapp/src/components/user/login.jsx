@@ -18,34 +18,25 @@ export default function LoginForm({ setIsLoggedIn }) {
     });
   };
 
-  const handleLogin = async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
+  console.log("loginData", loginData)
+    axios.post('http://127.0.0.1:8000/api/auth/login/', loginData)
+      .then(response => {
+        if (response) {
+          setIsLoggedIn(true);
+          localStorage.setItem('token', response.data.key);
+          setLoginData(initialLoginData); // Reset form fields to their initial state
+          navigate('/about');
+        } else {
+          console.error('Login failed:', response.data);
+        }
+      })
+      .catch(error => {
+        console.error('Error during login:', error);
+      });
+  };
   
-    try {
-
-      const response = await axios.post('http://127.0.0.1:8000/api/auth/login/', loginData,
-      //  {
-      //   // headers: {
-      //   //   'Content-Type': 'application/json',
-      //   //   'Authorization': "Token " + localStorage.getItem("token"),
-      //   // },
-      // }
-      );
-
-      if (response.status === 200) {
-        setIsLoggedIn(true);
-        localStorage.setItem('token', response.data.key)
-        // Reset form fields to their initial state
-        setLoginData(initialLoginData);
-        navigate('/about')
-      } else {
-        console.error('Login failed:', response.data);
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-    }
-  };  
-
   return (
     <div>
       <h2>Login</h2>
@@ -69,8 +60,6 @@ export default function LoginForm({ setIsLoggedIn }) {
           Log In
         </button>
       </form>
-
-      {/* {redirectToAbout && <Link to="/aboutus" />} */}
     </div>
   );
 }

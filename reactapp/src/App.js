@@ -3,11 +3,22 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import RegistrationForm from './components/user/registration';
 import LoginForm from './components/user/login';
 import About from './components/aboutus';
+import Profile from './components/user/profile';
+import ChangePassword from './components/user/changepassword';
+import CasesList from './components/cases/CasesList';
+import CreateCases from './components/cases/CreateCases';
+import CaseDetails from './components/cases/CaseDetails';
+import CaseUpdate from './components/cases/CaseUpdate';
+
+import "bootstrap/dist/css/bootstrap.min.css";
+// import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
 // import Home from './components/home'; 
 // import AddReminderCases from './components/addReminderCases'; 
 // import AddCases from './components/addCases'; 
 // import Reminders from './components/reminders'; 
-// import Profile from './components/profile'; 
+
 import './App.css';
 import axios from 'axios';
 
@@ -42,8 +53,9 @@ export default function App() {
             {isLoggedIn ? (
               <>
                 <li><Link to="/home">Home</Link></li>
-                <li><Link to="/add-reminder-cases">Add Reminder Cases</Link></li>
+                <li><Link to="/add-reminder">Add Reminder </Link></li>
                 <li><Link to="/add-cases">Add Cases</Link></li>
+                <li><Link to="/cases"> Cases</Link></li>
                 <li><Link to="/reminders">Reminders</Link></li>
                 <li><Link to="/profile">Profile</Link></li>
                 <li><button onClick={handleLogout}>Logout</button></li>
@@ -58,23 +70,33 @@ export default function App() {
         </nav>
 
         <Routes>
+
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<LoginForm setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<RegistrationForm setIsRegistered={setIsRegistered} />} />
           <Route path="/home" element={<About />} /> 
-          <Route path="/add-reminder-cases" element={<About />} />
-          <Route path="/add-cases" element={<About />} />
+          {isLoggedIn && (
+            <>
+          <Route path="/add-reminder" element={<About />} />
+          <Route path="/add-cases" element={<CreateCases />} />
+          <Route path="/cases" element={<CasesList />} />
           <Route path="/reminders" element={<About />} />
-          <Route path="/profile" element={<About />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/changepassword" element={<ChangePassword />} />
+          <Route path="/cases/:pk" element={<CaseDetails />} />
+          <Route path="/cases/:pk/update" element={<CaseUpdate />} />
+          </> 
+          )}
 
+          
 
-                    {/* <Route path="/about" element={<About />} />
+          {/* <Route path="/about" element={<About />} />
           <Route path="/login" element={<LoginForm setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/home" element={<Home />} /> 
           <Route path="/add-reminder-cases" element={<AddReminderCases />} />
           <Route path="/add-cases" element={<AddCases />} />
-          <Route path="/reminders" element={<Reminders />} />
-          <Route path="/profile" element={<Profile />} /> */}
+            <Route path="/reminders" element={<Reminders />} />*/}
+
         </Routes>
       </div>
     </Router>

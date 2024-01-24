@@ -1,0 +1,32 @@
+.custom-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: lightgreen;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    width: 60%; /* Adjust width as needed */
+    max-width: 600px; /* Set maximum width */
+    max-height: 80%; /* Set maximum height */
+    overflow: auto; /* Enable scroll if content exceeds height */
+  }
+  
+  .custom-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+
+  .success {
+    background-color: lightgreen;
+  }
+  
+  .error {
+    background-color: red;
+  }
