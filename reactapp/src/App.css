@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-danger-light {
+  background-color: #FFCDD2;
+}
+
+.bg-success-light {
+  background-color: #A5D6A7;
+}

@@ -17,6 +17,7 @@ import Home from './components/home';
 import AddReminder from './components/reminders/AddReminder';
 import ReminderUpdate from './components/reminders/ReminderUpdate';
 import ReminderDetails from './components/reminders/ReminderDetails';
+import TodayReminders from './components/reminders/TodayReminders';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -71,7 +72,7 @@ export default function App() {
                 <div className="d-flex">
                   <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/add-cases">Add Cases</Link></li>
                   <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/cases"> Cases</Link></li>
-                  <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/reminders">Reminders</Link></li>
+                  <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/todayreminders">Reminders</Link></li>
                   <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/profile">Profile</Link></li>
                   <li className="nav-item"><button className="btn btn-danger" onClick={handleLogout}>Logout</button></li>
                 </div>
@@ -102,7 +103,7 @@ export default function App() {
         <Route path="/add-reminder" element={<About />} />
         <Route path="/add-cases" element={<CreateCases />} />
         <Route path="/cases" element={<CasesList />} />
-        <Route path="/reminders" element={<About />} />
+        <Route path="/todayreminders" element={<TodayReminders />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/cases/:pk" element={<CaseDetails />} />
