@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import CaseDocumentsList from '../documents/CaseDocumentsList';
+import CaseRemindersList from '../reminders/CaseRemindersList';
 
 export default function CaseDetails() {
   const [caseDetails, setCaseDetails] = useState({});
@@ -91,6 +92,10 @@ export default function CaseDetails() {
 
       <div className="card col-md-5 m-2 p-2">
         <CaseDocumentsList pk={pk} />
+      </div>
+
+      <div className="card col-md-5 m-2 p-2">
+        <CaseRemindersList pk={pk} />
       </div>
     </div>
   );

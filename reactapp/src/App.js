@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import RegistrationForm from './components/user/registration';
 import LoginForm from './components/user/login';
@@ -14,7 +14,9 @@ import DocumentUpdate from './components/documents/DocumentUpdate';
 import DocumentDetails from './components/documents/DocumentDetails';
 import Footer from './components/footer';
 import Home from './components/home';
-
+import AddReminder from './components/reminders/AddReminder';
+import ReminderUpdate from './components/reminders/ReminderUpdate';
+import ReminderDetails from './components/reminders/ReminderDetails';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -24,6 +26,15 @@ import axios from 'axios';
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
+    // Check for the existence of a token in local storage
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      // Token exists, the user is logged in
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleLogout = () => {
     axios.post('http://127.0.0.1:8000/api/auth/logout/', null, {
@@ -58,7 +69,6 @@ export default function App() {
             {isLoggedIn ? (
               <>
                 <div className="d-flex">
-                  <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/add-reminder">Add Reminder </Link></li>
                   <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/add-cases">Add Cases</Link></li>
                   <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/cases"> Cases</Link></li>
                   <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/reminders">Reminders</Link></li>
@@ -100,7 +110,10 @@ export default function App() {
         <Route path="/cases/:pk/documents/create" element={<AddDocument />} />
         <Route path="/documents/:pk/update" element={<DocumentUpdate />} />
         <Route path="/documents/:pk/" element={<DocumentDetails />} />
-        
+
+        <Route path="/cases/:pk/reminders/create" element={<AddReminder />} />
+        <Route path="/reminders/:pk/update" element={<ReminderUpdate />} />
+        <Route path="/reminders/:pk/" element={<ReminderDetails />} />
         </> 
         )}
 

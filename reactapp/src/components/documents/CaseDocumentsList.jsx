@@ -15,8 +15,18 @@ export default function CaseDocumentsList({ pk }) {
   const loadDocuments = () => {
     Axios.get(`http://127.0.0.1:8000/api/cases/${pk}/documents/`)
       .then((response) => {
-        console.log(response.data);
-        setDocuments(response.data);
+        
+        // Get the user's browser timezone
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        // Format the date/time in each document with the user's timezone
+        const formattedDocuments = response.data.map((document) => ({
+          ...document,
+          created_at: new Date(document.created_at).toLocaleString('en-US', { timeZone: userTimeZone }),
+          updated_at: new Date(document.updated_at).toLocaleString('en-US', { timeZone: userTimeZone }),
+        }));
+
+        setDocuments(formattedDocuments);
         setLoading(false);
       })
       .catch((err) => {
@@ -37,7 +47,6 @@ export default function CaseDocumentsList({ pk }) {
       })
       .catch((error) => {
         console.error(error);
-        
       });
   };
 
@@ -81,13 +90,15 @@ export default function CaseDocumentsList({ pk }) {
                   <div className="d-flex">
                     <Link to={`/documents/${document.id}/update`}>
                       <button className="btn btn-warning mx-1">
-                        <i className="bi bi-pencil-square"></i></button>
+                        <i className="bi bi-pencil-square"></i>
+                      </button>
                     </Link>
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(document.id)}
                     >
-                      <i className="bi bi-trash"></i></button>
+                      <i className="bi bi-trash"></i>
+                    </button>
                   </div>
                 </td>
               </tr>
