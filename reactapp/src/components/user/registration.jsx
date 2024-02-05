@@ -31,6 +31,7 @@ export default function RegistrationForm({ setIsRegistered }) {
         console.error('Registration failed:', response.data);
       }
     } catch (error) {
+      console.log(error)
       if (error.code === 'ERR_BAD_RESPONSE') {
         setIsRegistered(true);
         navigate('/login');

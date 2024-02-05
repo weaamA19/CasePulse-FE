@@ -56,70 +56,70 @@ export default function App() {
   return (
     <Router>
       <div>
-      <nav className="navbar navbar-dark bg-secondary">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">Case Pulse</Link>
-          {/* <Link to="/">
-            <img
-              src="http://127.0.0.1:8000/static/uploads/logo.jpg"
-              alt="Case Pulse Logo"
-              style={{ width: '150px', height: 'auto' }}
-            />
-          </Link> */}
-          <ul className="navbar-nav d-flex">
-            {isLoggedIn ? (
+        <nav className="navbar navbar-dark bg-secondary">
+          <div className="container-fluid">
+            {/* <Link className="navbar-brand" to="/">Case Pulse</Link> */}
+              {isLoggedIn ? (
+                <>
+                  <Link className="navbar-brand" to="/about">Case Pulse</Link>
+                  <ul className="navbar-nav d-flex">
+                  <div className="d-flex">
+                    
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/add-cases">Add Cases</Link></li>
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/cases"> Cases</Link></li>
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/todayreminders">Reminders</Link></li>
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/profile">Profile</Link></li>
+                    <li className="nav-item"><button className="btn btn-danger" onClick={handleLogout}>Logout</button></li>
+                  </div>
+                  </ul>
+                </>
+              ) : (
+                <>
+                <Link className="navbar-brand" to="/">Case Pulse</Link>
+                <ul className="navbar-nav d-flex">
+                  <div className="d-flex">
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/">Home</Link></li>
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/about">About Us</Link></li>     
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/login">Login</Link></li>
+                    <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/register">Register</Link></li>
+                  </div>
+                </ul>
+                </>
+              )}
+          </div>
+        </nav>
+        
+        <div style={{ margin: '50px'}}>
+          <Routes>
+
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<LoginForm setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path="/register" element={<RegistrationForm setIsRegistered={setIsRegistered} />} />
+            <Route path="/" element={<Home />} /> 
+            {isLoggedIn && (
               <>
-                <div className="d-flex">
-                  <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/add-cases">Add Cases</Link></li>
-                  <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/cases"> Cases</Link></li>
-                  <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/todayreminders">Reminders</Link></li>
-                  <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/profile">Profile</Link></li>
-                  <li className="nav-item"><button className="btn btn-danger" onClick={handleLogout}>Logout</button></li>
-                </div>
+            <Route path="/add-reminder" element={<About />} />
+            <Route path="/add-cases" element={<CreateCases />} />
+            <Route path="/cases" element={<CasesList />} />
+            <Route path="/todayreminders" element={<TodayReminders />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/changepassword" element={<ChangePassword />} />
+            <Route path="/cases/:pk" element={<CaseDetails />} />
+            <Route path="/cases/:pk/update" element={<CaseUpdate />} />
+            <Route path="/cases/:pk/documents/create" element={<AddDocument />} />
+            <Route path="/documents/:pk/update" element={<DocumentUpdate />} />
+            <Route path="/documents/:pk/" element={<DocumentDetails />} />
 
-              </>
-            ) : (
-              <div className="d-flex">
-                <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/">Home</Link></li>
-                <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/about">About Us</Link></li>     
-                <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/login">Login</Link></li>
-                <li className="nav-item"><Link className="nav-link text-white mx-2 font-weight-bold" to="/register">Register</Link></li>
-              </div>
+            <Route path="/cases/:pk/reminders/create" element={<AddReminder />} />
+            <Route path="/reminders/:pk/update" element={<ReminderUpdate />} />
+            <Route path="/reminders/:pk/" element={<ReminderDetails />} />
+            </> 
             )}
-          </ul>
+
+          </Routes>
         </div>
-      </nav>
 
-
-
-      <Routes>
-
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<LoginForm setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/register" element={<RegistrationForm setIsRegistered={setIsRegistered} />} />
-        <Route path="/" element={<Home />} /> 
-        {isLoggedIn && (
-          <>
-        <Route path="/add-reminder" element={<About />} />
-        <Route path="/add-cases" element={<CreateCases />} />
-        <Route path="/cases" element={<CasesList />} />
-        <Route path="/todayreminders" element={<TodayReminders />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/changepassword" element={<ChangePassword />} />
-        <Route path="/cases/:pk" element={<CaseDetails />} />
-        <Route path="/cases/:pk/update" element={<CaseUpdate />} />
-        <Route path="/cases/:pk/documents/create" element={<AddDocument />} />
-        <Route path="/documents/:pk/update" element={<DocumentUpdate />} />
-        <Route path="/documents/:pk/" element={<DocumentDetails />} />
-
-        <Route path="/cases/:pk/reminders/create" element={<AddReminder />} />
-        <Route path="/reminders/:pk/update" element={<ReminderUpdate />} />
-        <Route path="/reminders/:pk/" element={<ReminderDetails />} />
-        </> 
-        )}
-
-      </Routes>
-      <Footer />
+        <Footer />
       </div>
     </Router>
   );

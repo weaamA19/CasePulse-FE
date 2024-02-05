@@ -31,13 +31,13 @@ export default function Home ()  {
         </div>
 
         {/* Right Container */}
-        <div className="col-md-6 p-0">
+        <div className="col-md-6 p-0" style={{ margin: '24px 0'}}>
           {imageLoaded && (
             <img
               src="http://127.0.0.1:8000/static/uploads/welcome.jpg"
               alt="Background"
               className="img-fluid"
-              style={{ objectFit: 'cover', height: '100%', width: '100%' }}
+              style={{ objectFit: 'cover', height: '100%', width: '100%'}}
             />
           )}
         </div>

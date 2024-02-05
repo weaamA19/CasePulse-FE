@@ -16,16 +16,15 @@ export default function CaseDetails() {
   }, [pk]);
 
   const loadCaseDetails = () => {
-    setLoading(true); // Set loading to true when starting to fetch data
+    setLoading(true);
     Axios.get(`http://127.0.0.1:8000/api/cases/${pk}/`)
       .then((response) => {
-        console.log(response);
         setCaseDetails(response.data);
-        setLoading(false); // Set loading to false when data is loaded
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false); // Set loading to false even if an error occurs
+        setLoading(false);
       });
   };
 
@@ -35,8 +34,7 @@ export default function CaseDetails() {
 
   const handleDelete = () => {
     Axios.delete(`http://127.0.0.1:8000/api/cases/${pk}/delete`)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         navigate('/cases');
       })
       .catch((err) => {
@@ -48,8 +46,7 @@ export default function CaseDetails() {
     const newStatus = caseDetails.status === 'A' ? 'I' : 'A';
 
     Axios.patch(`http://127.0.0.1:8000/api/cases/${pk}/${newStatus === 'A' ? 'caseactive' : 'caseinactive'}`)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         loadCaseDetails();
       })
       .catch((err) => {
@@ -67,36 +64,36 @@ export default function CaseDetails() {
     );
   }
 
-  return (
-    <div className="d-flex flex-column align-items-center">
-      <div className="card col-md-5 m-2 p-2">
-        <div className="card-body">
-          <h1>{caseDetails.title}</h1>
-        </div>
-        <div className="card-body">
-          <p>Description: {caseDetails.description}</p>
-          <p>Status: {caseDetails.status === 'A' ? 'Active' : 'Inactive'}</p>
-          <p>Client CPR: {caseDetails.clientCPR}</p>
-          <p>Client Email: {caseDetails.clientEmail}</p>
-          <p>Start Date: {new Date(caseDetails.case_start_date).toLocaleString()}</p>
-          <p>End Date: {caseDetails.case_end_date ? new Date(caseDetails.case_end_date).toLocaleString() : 'N/A'}</p>
-        </div>
-        <div className="card-footer">
-          <button className="btn btn-primary" onClick={handleUpdate}>Update</button>
-          <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
-          <button className="btn btn-warning" onClick={handleToggleStatus}>
-            {caseDetails.status === 'A' ? 'Inactivate' : 'Activate'}
-          </button>
-        </div>
-      </div>
+// ... (previous code)
 
-      <div className="card col-md-5 m-2 p-2">
-        <CaseDocumentsList pk={pk} />
+return (
+  <div className="d-flex justify-content-center">
+    <div className="card col-md-5 m-2 p-2">
+      <div className="card-body">
+        <h1>{caseDetails.title}</h1>
       </div>
-
-      <div className="card col-md-5 m-2 p-2">
-        <CaseRemindersList pk={pk} />
+      <div className="card-body">
+        <p>Description: {caseDetails.description}</p>
+        <p>Status: {caseDetails.status === 'A' ? 'Active' : 'Inactive'}</p>
+        <p>Client CPR: {caseDetails.clientCPR}</p>
+        <p>Client Email: {caseDetails.clientEmail}</p>
+        <p>Start Date: {new Date(caseDetails.case_start_date).toLocaleString()}</p>
+        <p>End Date: {caseDetails.case_end_date ? new Date(caseDetails.case_end_date).toLocaleString() : 'N/A'}</p>
+      </div>
+      <div className="card-footer">
+        <button className="btn btn-primary" onClick={handleUpdate}>Update</button>
+        <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+        <button className="btn btn-warning" onClick={handleToggleStatus}>
+          {caseDetails.status === 'A' ? 'Inactivate' : 'Activate'}
+        </button>
       </div>
     </div>
-  );
+
+    <div className="card col-md-5 m-2 p-2">
+      <CaseDocumentsList pk={pk} />
+      <hr style={{ margin: '20px 0' }} />
+      <CaseRemindersList pk={pk} />
+    </div>
+  </div>
+);
 }
